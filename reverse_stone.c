@@ -1,170 +1,165 @@
-﻿/* reverseStone.c */
+﻿/* reverse_stone.c */
 
-int reverseUp(int b[N][N], int n, int m, int turn){
+#include <reversi.h>
+
+int reverse_left(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(n-c < 0)
+	while(!(board[X-c][Y] == turn)){ // find a stone that is same colors
+		if(X-c < 0 || board[X-c][Y] == 0) // search out of the board or empty
 			return 0;
-		if(b[n-c][m] == 0)
-			return 0;
-		if(b[n-c][m] == turn){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n-c][m] = turn;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X-c][Y] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X-c][Y] = turn;
+  }
+
+  return sum;
 }
 
-int reverseDown(int b[N][N], int n, int m, int t){
+int reverse_right(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(n+c >= N)
+	while(!(board[X+c][Y] == turn)){ // find a stone that is same colors
+		if(X+c == N || board[X+c][Y] == 0) // search out of the board or empty
 			return 0;
-		if(b[n+c][m] == 0)
-			return 0;
-		if(b[n+c][m] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n+c][m] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X+c][Y] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X+c][Y] = turn;
+  }
+
+  return sum;
 }
 
-int reverseLeft(int b[N][N], int n, int m, int t){
+int reverse_up(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(m-c < 0)
+	while(!(board[X][Y-c] == turn)){ // find a stone that is same colors
+		if(Y-c < 0 || board[X][Y-c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n][m-c] == 0)
-			return 0;
-		if(b[n][m-c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n][m-c] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X][Y-c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X][Y-c] = turn;
+  }
+
+  return sum;
 }
 
-int reverseRight(int b[N][N], int n, int m, int t){
+
+int reverse_down(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(m+c >= N)
+	while(!(board[X][Y+c] == turn)){ // find a stone that is same colors
+		if(Y+c == N || board[X][Y+c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n][m+c] == 0)
-			return 0;
-		if(b[n][m+c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n][m+c] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X][Y+c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X][Y+c] = turn;
+  }
+
+  return sum;
 }
 
-int reverseUpLeft(int b[N][N], int n, int m, int t){
+int reverse_left_up(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(n-c < 0 || m-c < 0)
+	while(!(board[X-c][Y-c] == turn)){ // find a stone that is same colors
+		if(X-c < 0 || Y-c < 0|| board[X-c][Y-c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n-c][m-c] == 0)
-			return 0;
-		if(b[n-c][m-c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n-c][m-c] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X-c][Y-c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X-c][Y-c] = turn;
+  }
+
+  return sum;
 }
 
-int reverseUpRight(int b[N][N], int n, int m, int t){
+int reverse_left_down(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(n-c < 0 || m+c >= N)
+	while(!(board[X+c][Y-c] == turn)){ // find a stone that is same colors
+		if(X-c == N || Y-c < 0|| board[X+c][Y-c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n-c][m+c] == 0)
-			return 0;
-		if(b[n-c][m+c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n-c][m+c] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X+c][Y-c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X+c][Y-c] = turn;
+  }
+
+  return sum;
 }
 
-int reverseDownLeft(int b[N][N], int n, int m, int t){
+int reverse_right_up(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(m-c < 0 || n+c >= N)
+	while(!(board[X-c][Y+c] == turn)){ // find a stone that is same colors
+		if(X-c < 0 || Y+c == N|| board[X-c][Y+c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n+c][m-c] == 0)
-			return 0;
-		if(b[n+c][m-c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n+c][m-1] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X-c][Y+c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X-c][Y+c] = turn;
+  }
+
+  return sum;
 }
 
-int reverseDownRight(int b[N][N], int n, int m, int t){
+int reverse_right_down(STONE board[N][N], int X, int Y, int turn){
 	int c=1;
 	int sum;
 	
-	while(1){
-		if(n+c >= N || m+c >= N)
+	while(!(board[X-c][Y-c] == turn)){ // find a stone that is same colors
+		if(X+c == N || Y+c == N|| board[X+c][Y+c] == 0) // search out of the board or empty
 			return 0;
-		if(b[n+c][m+c] == 0)
-			return 0;
-		if(b[n+c][m+c] == t){
-			sum = c-1;
-			while(c-1){
-				c--;
-				b[n+c][m+c] = t;
-			}
-			return sum;
-		}
-		c++;
+		if(board[X+c][Y+c] == turn^3) // find a stone that is opposite colors
+			c++;
 	}
+
+  sum = c-1; // set return value
+  while(c > 1){ // reverse stones
+    c--;
+    board[X+c][Y+c] = turn;
+  }
+
+  return sum;
 }
 

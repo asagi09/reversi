@@ -2,17 +2,17 @@
 
 #include <reversi.h>
 
-extern void initializeBoard(board);
-extern void inputYourMove(board);
+/* extern void initializeBoard(board); */
+/* extern void inputYourMove(board); */
 
-void startGame(int board[][]){
-	int board[N][N];
-	int turn = START_PLAYER;
-	int reminning_space = 59;
+void start_game(unsigned char board[][]){
+	unsigned char board[N][N];
+	unsigned char turn = START_PLAYER;
+  int remaining_space = 59;
 
-  initializeBoard(board);
+  initialize_board(board);
   while(remaining_space){
-    inputYourMove(board);
+    input_move(board);
   }
 }
 

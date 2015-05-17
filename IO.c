@@ -1,9 +1,9 @@
-﻿#include <stdio.h>
+﻿/* IO.c */
+
+#include <stdio.h>
 #include <reversi.h>
 
-extern int Possible(board, turn);
-
-void Show(int board[N][N]){
+void show(STONE board[N][N]){
 	int i, j, k;
 	for(i = 0; i < N; i++){
 		if(i){
@@ -17,7 +17,7 @@ void Show(int board[N][N]){
 				printf("|");
 			if(board[i][j] == 0)
 				printf("   ");
-			else if(board[i][j] == -1)
+			else if(board[i][j] == 2)
 				printf(" x ");
 			else
 				printf(" o ");
@@ -27,25 +27,28 @@ void Show(int board[N][N]){
 	return;
 }
 
-void inputYourMove(int board[N][N]){
+int input_move(STONE board[N][N], int turn){
   int X, Y;
 
-  if (!(Possible(board, turn))) return; // you can set or not.
+  if (!possible(board, turn))
+    return 0; // you can set or not.
   while(1){
     printf("input your move.(1~8): ");
     scanf("%d %d", &X, &Y);
     X--; Y--; // 1~8 -> 0~7
   }
+
+  return set(board, X, Y, turn);
   
 }
 
-void Jubge(int board[N][N]){
-	int i, j;
+void jubge(STONE board[N][N]){
+	int x, y;
 	int result = 0;
 	
-	for(i = 0; i < N; i++){
-		for(j = 0; j < N; j++){
-			result += b[i][j];
+	for(x = 0; x < N; x++){
+		for(y = 0; y < N; y++){
+			result += board[x][y];
 		}
 	}
 	

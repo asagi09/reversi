@@ -1,46 +1,38 @@
 ﻿/* control_board.c */
 
-#include <stdio.h>
 #include <reversi.h>
+#include <stdbool.h>
 
-extern int reverseUp(int board[N][N], int X, int Y, int turn);
-extern int reverseDown(int board[N][N], int X, int Y, int turn);
-extern int reverseLeft(int board[N][N], int X, int Y, int turn);
-extern int reverseRight(int board[N][N], int X, int Y, int turn);
-extern int reverseUpLeft(int board[N][N], int X, int Y, int turn);
-extern int reverseUpRight(int board[N][N], int X, int Y, int turn);
-extern int reverseDownLeft(int board[N][N], int X, int Y, int turn);
-extern int reverseDownRight(int board[N][N], int X, int Y, int turn);
-
-void copyBoard(int board[][], int bcopy[][]){
-  int X, Y;
-  for(X=0; X<N; X++)
-    for(Y=0; Y<N; Y++)
-      bcopy[X][Y] = board[X][Y]
+void copy_board(STONE board[N][N], STONE bcopy[N][N]){
+  int x, y;
+  for(x=0; x<N; x++)
+    for(y=0; y<N; y++)
+      bcopy[x][y] = board[x][y];
   return;
 }
 
-int Set(int b[N][N], int n, int m, int t){
+int set(STONE board[N][N], int X, int Y, int turn){
 	int pos = 0;
-	if(n < 0 || n >= N || m < 0 || m >= N){
+
+	if(X < 0 || X >=N || Y < 0 || Y >= N){
 		return 0;
 	}
-	pos =  reverseUp(board, n, m, turn) + reverseDown(board, n, m, turn)
-	     + reverseLeft(board, n, m, turn) + reverseRight(board, n, m, turn)
-	     + reverseUpLeft(board, n, m, turn) + reverseUpRight(board, n, m, turn)
-	     + reverseDownLeft(board, n, m, turn) + reverseDoRight(board, n, m, turn);
+
+	pos =  reverseUp(board, X, Y, turn) + reverseDown(board, X, Y, turn)
+	     + reverseLeft(board, X, Y, turn) + reverseRight(board, X, Y, turn)
+	     + reverseUpLeft(board, X, Y, turn) + reverseUpRight(board, X, Y, turn)
+	     + reverseDownLeft(board, X, Y, turn) + reverseDownRight(board, X, Y, turn);
 	if(pos)
-		b[n][m] = turn;
+		board[X][Y] = turn;
 	return pos;
 }
 
-int Calc(int board[N][N], int X, int Y, int turn){
+int calc(STONE board[N][N], int X, int Y, int turn){
 	int sum;
-	int bcopy[N][N];
+	STONE bcopy[N][N];
+  copy_board(board, bcopy);
 	
-  copyBoard(board, bcopy);
-	
-	sum =  reverseUp(bcopy, X, Y turn)
+	sum =  reverseUp(bcopy, X, Y ,turn)
        + reverseDown(bcopy, X, Y, turn)
 	     + reverseLeft(bcopy, X, Y, turn)
        + reverseRight(bcopy, X, Y, turn)
@@ -52,20 +44,21 @@ int Calc(int board[N][N], int X, int Y, int turn){
 	return sum;
 }
 
-int Possible(int board[][], int turn){
-	int X, Y;
+bool possible(STONE board[N][N], int turn){
+	int x, y;
 	
-	for(X = 0; X < N; X++){
-		for(Y = 0; Y < N; Y++){
-			if(Calc(board, X, Y, turn)) return 1;
+	for(x = 0; x < N; x++){
+		for(y = 0; y < N; y++){
+			if(calc(board, x, y, turn))
+        return false;
 		}
 	}	
-	return 0;
+	return true;
 }
 
-void initializeBoard(int board[][]){
+void initializeBoard(STONE board[N][N]){
 	board[3][3] =  1; board[4][4] =  1;
-	board[3][4] = -1; board[4][3] = -1;
+	board[3][4] =  2; board[4][3] =  2;
 	return;
 }
 
