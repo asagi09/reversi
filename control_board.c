@@ -18,10 +18,10 @@ int set(STONE board[N][N], int X, int Y, int turn){
 		return 0;
 	}
 
-	pos =  reverseUp(board, X, Y, turn) + reverseDown(board, X, Y, turn)
-	     + reverseLeft(board, X, Y, turn) + reverseRight(board, X, Y, turn)
-	     + reverseUpLeft(board, X, Y, turn) + reverseUpRight(board, X, Y, turn)
-	     + reverseDownLeft(board, X, Y, turn) + reverseDownRight(board, X, Y, turn);
+	pos =  reverse_left(board, X, Y, turn) + reverse_right(board, X, Y, turn)
+	     + reverse_up(board, X, Y, turn) + reverse_down(board, X, Y, turn)
+	     + reverse_left_up(board, X, Y, turn) + reverse_right_down(board, X, Y, turn)
+	     + reverse_right_up(board, X, Y, turn) + reverse_right_down(board, X, Y, turn);
 	if(pos)
 		board[X][Y] = turn;
 	return pos;
@@ -32,14 +32,10 @@ int calc(STONE board[N][N], int X, int Y, int turn){
 	STONE bcopy[N][N];
   copy_board(board, bcopy);
 	
-	sum =  reverseUp(bcopy, X, Y ,turn)
-       + reverseDown(bcopy, X, Y, turn)
-	     + reverseLeft(bcopy, X, Y, turn)
-       + reverseRight(bcopy, X, Y, turn)
-	     + reverseUpLeft(bcopy, X, Y, turn)
-       + reverseUpRight(bcopy, X, Y, turn)
-	     + reverseDownLeft(bcopy, X, Y, turn)
-       + reverseDownRight(bcopy, X, Y, turn);
+	sum =  reverse_left(bcopy, X, Y ,turn) + reverse_right(bcopy, X, Y, turn)
+	     + reverse_up(bcopy, X, Y, turn) + reverse_down(bcopy, X, Y, turn)
+	     + reverse_left_down(bcopy, X, Y, turn) + reverse_left_down(bcopy, X, Y, turn)
+	     + reverse_right_up(bcopy, X, Y, turn) + reverse_right_down(bcopy, X, Y, turn);
 
 	return sum;
 }

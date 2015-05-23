@@ -30,8 +30,10 @@ void show(STONE board[N][N]){
 int input_move(STONE board[N][N], int turn){
   int X, Y;
 
-  if (!possible(board, turn))
-    return 0; // you can set or not.
+  if (!possible(board, turn)){
+    printf("You can't set a stone anywhere.\nYou will pass.\n");
+    return 0;
+  }
   while(1){
     printf("input your move.(1~8): ");
     scanf("%d %d", &X, &Y);
